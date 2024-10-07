@@ -75,7 +75,7 @@ CREATE TABLE Fine(
     Days_Delay date NOT NULL,
     Member_id VARCHAR(10) NOT NULL,
     foreign key (Member_id) References Member(Member_id)
-)
+);
 
 CREATE TABLE Book_Issue(
 	Issue_id VARCHAR(10) Primary Key,
