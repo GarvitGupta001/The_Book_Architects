@@ -40,7 +40,7 @@ CREATE TABLE Vendor(
 
 CREATE TABLE Shelf(
     Shelf_id VARCHAR(10) PRIMARY KEY,
-    Quantity INT PRIMARY KEY,
+    Quantity INT NOT NULL,
     Shelf_floor INT NOT NULL,
     Shelf_rows INT NOT NULL,
     Shelf_cols INT NOT NULL
