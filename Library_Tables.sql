@@ -1,5 +1,26 @@
-CREATE DATABASE Library;
-USE LIBRARY;
+Create Table Author(
+    Author_id Varchar(10) Primary Key,
+    Author_name varchar(50) NOT NULL
+);
+
+CREATE TABLE Publisher(
+    Publisher_id Varchar(10) Primary Key,
+    Publisher_name varchar(50) NOT NULL
+);
+
+CREATE TABLE Vendor(
+    Vendor_id VARCHAR(10) PRIMARY KEY,
+    Vendor_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Shelf(
+    Shelf_id VARCHAR(10) PRIMARY KEY,
+    Quantity INT NOT NULL,
+    Shelf_floor INT NOT NULL,
+    Shelf_rows INT NOT NULL,
+    Shelf_cols INT NOT NULL
+);
+
 CREATE TABLE BOOK(
     Book_id VARCHAR(10) PRIMARY KEY,
     Author_id VARCHAR(10) NOT NULL,
@@ -17,33 +38,10 @@ CREATE TABLE BOOK(
     Availability int NOT NULL,
     Shelf_date date NOT NULL,
     Bought_on date NOT NULL,
-    foreign key (Author_id) references Author(Author_id),
-    foreign key (Publisher_id) references Publisher(Publisher_id),
-    foreign key (Vendor_Id) references Vendor(Vendor_id),
+    foreign key (Author_id) references Author(Author_id) on update cascade,
+    foreign key (Publisher_id) references Publisher(Publisher_id) on update cascade,
+    foreign key (Vendor_id) references Vendor(Vendor_id) on update cascade,
     foreign key (Shelf_id) references Shelf(Shelf_id)
-);
-
-Create Table Author(
-    Author_id Varchar(10) Primary Key,
-    Author_name varchar(50) NOT NULL
-);
-
-CREATE TABLE Publisher(
-    Publisher_id Varchar(10) Primary Key,
-    Publisher_name varchar(50) NOT NULL
-);
-
-CREATE TABLE Vendor(
-    Vendor_id VARCHAR(10),
-    Vendor_name VARCHAR(50)
-);
-
-CREATE TABLE Shelf(
-    Shelf_id VARCHAR(10) PRIMARY KEY,
-    Quantity INT NOT NULL,
-    Shelf_floor INT NOT NULL,
-    Shelf_rows INT NOT NULL,
-    Shelf_cols INT NOT NULL
 );
 
 CREATE TABLE EMPLOYEE(
@@ -57,7 +55,7 @@ CREATE TABLE EMPLOYEE(
 );
 
 CREATE TABLE Member(
-    Member_id Varchar(10) NOT NULL,
+    Member_id Varchar(10) PRIMARY KEY,
     Member_name VARCHAR(50) NOT NULL,
     Member_Type Varchar(50) NOT NULL,
     Date_of_birth date NOT NULL,
@@ -74,7 +72,7 @@ CREATE TABLE Fine(
     Amount float NOT NULL,
     Days_Delay date NOT NULL,
     Member_id VARCHAR(10) NOT NULL,
-    foreign key (Member_id) References Member(Member_id)
+    foreign key (Member_id) References Member(Member_id) on delete cascade
 );
 
 CREATE TABLE Book_Issue(
@@ -83,9 +81,9 @@ CREATE TABLE Book_Issue(
     Employee_id Varchar(10) NOT NULL,
     Member_id VARCHAR(10) NOT NULL,
     Book_id VARCHAR(10) NOT NULL,
-    foreign key (Employee_id) references Employee(employee_id),
-    foreign key (Member_id) references Member(Member_id),
-    foreign key (Book_id) references Book(Book_id)
+    foreign key (Employee_id) references Employee(employee_id) on update cascade,
+    foreign key (Member_id) references Member(Member_id) on update cascade,
+    foreign key (Book_id) references Book(Book_id) on update cascade
 );
 CREATE TABLE Book_Return(
     Return_id VARCHAR(10) Primary Key,
@@ -93,8 +91,7 @@ CREATE TABLE Book_Return(
     Employee_id Varchar(10) NOT NULL,
     Member_id VARCHAR(10) NOT NULL,
     Book_id VARCHAR(10) NOT NULL,
-    foreign key (Employee_id) references Employee(employee_id),
-    foreign key (Member_id) references Member(Member_id),
-    foreign key (Book_id) references Book(Book_id)
+    foreign key (Employee_id) references Employee(employee_id) on update cascade,
+    foreign key (Member_id) references Member(Member_id) on update cascade,
+    foreign key (Book_id) references Book(Book_id) on update cascade
 );
-
