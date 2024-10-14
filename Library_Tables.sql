@@ -48,7 +48,7 @@ CREATE TABLE EMPLOYEE(
     Employee_id VARCHAR(10) PRIMARY KEY,
     Employee_name VARCHAR(50) NOT NULL,
     Employee_email VARCHAR(50) NOT NULL,
-    Employee_phone INT NOT NULL,
+    Employee_phone BIGINT NOT NULL,
     Gender Varchar(10) NOT NULL,
     Date_of_Birth date NOT NULL,
     Date_of_joining date NOT NULL
