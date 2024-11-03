@@ -1,16 +1,23 @@
 Create Table Author(
     Author_id Varchar(10) Primary Key,
-    Author_name varchar(50) NOT NULL
+    Author_name varchar(50) NOT NULL,
+    Author_dob date NOT NULL,
+    Author_origin TEXT ,	
+    About TEXT	
 );
 
 CREATE TABLE Publisher(
     Publisher_id Varchar(10) Primary Key,
-    Publisher_name varchar(50) NOT NULL
+    Publisher_name varchar(50) NOT NULL,
+    Publisher_address TEXT NOT NULL,
+    About TEXT	
 );
 
 CREATE TABLE Vendor(
     Vendor_id VARCHAR(10) PRIMARY KEY,
-    Vendor_name VARCHAR(50) NOT NULL
+    Vendor_name VARCHAR(50) NOT NULL,
+    Vendor_address TEXT NOT NULL,
+    About TEXT	
 );
 
 CREATE TABLE Shelf(
