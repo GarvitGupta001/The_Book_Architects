@@ -10,7 +10,6 @@ class PublisherModel(db.Model):
     def __repr__(self):
         return f"<Publisher {self.publisher_name} - ID: {self.publisher_id}>"
     def to_dict(self):
-        """Convert the PublisherModel instance into a dictionary format."""
         return {
             'publisher_id': self.publisher_id,
             'publisher_name': self.publisher_name,

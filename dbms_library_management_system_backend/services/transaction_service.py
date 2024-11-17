@@ -1,7 +1,6 @@
 from utils.utils import db
 from models.transaction_model import TransactionModel
 
-# Add a new transaction
 def add_transaction(data):
     transaction = TransactionModel(
         transaction_id=data.get('transaction_id'),
@@ -15,12 +14,12 @@ def add_transaction(data):
     db.session.commit()
     return transaction
 
-# Retrieve a transaction by ID
+
 def get_transaction_by_id(transaction_id):
     transaction= TransactionModel.query.get(transaction_id)
     return transaction.to_dict()
 
-# Update transaction details
+
 def update_transaction(transaction_id, transaction_type=None, transaction_date=None, employee_id=None, member_id=None, book_id=None):
     transaction = TransactionModel.query.get(transaction_id)
     if transaction:
@@ -41,7 +40,7 @@ def update_transaction(transaction_id, transaction_type=None, transaction_date=N
     return transaction
 
 
-# Delete a transaction by ID
+
 def delete_transaction(transaction_id):
     transaction = get_transaction_by_id(transaction_id)
     if transaction:

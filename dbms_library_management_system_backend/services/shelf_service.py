@@ -1,7 +1,6 @@
 from utils.utils import db
 from models.shelf_model import ShelfModel
 
-# Create a new shelf
 def create_shelf(data):
     new_shelf = ShelfModel(
         shelf_id=data.get('shelf_id'),
@@ -14,12 +13,11 @@ def create_shelf(data):
     db.session.commit()
     return new_shelf
 
-# Retrieve a shelf by ID
+
 def get_shelf_by_id(shelf_id):
     shelf=ShelfModel.query.get(shelf_id)
     return shelf.to_dict()
 
-# Update shelf information
 def update_shelf(shelf_id, quantity=None, shelf_floor=None, shelf_rows=None, shelf_cols=None):
     shelf = get_shelf_by_id(shelf_id)
     if shelf:
@@ -35,7 +33,7 @@ def update_shelf(shelf_id, quantity=None, shelf_floor=None, shelf_rows=None, she
         return shelf.to_dict()
     return shelf
 
-# Delete a shelf by ID
+
 def delete_shelf(shelf_id):
     shelf = get_shelf_by_id(shelf_id)
     if shelf:

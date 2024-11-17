@@ -1,5 +1,5 @@
 from utils.utils import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
 class MemberModel(db.Model):
     __tablename__ = 'member'
     member_id = db.Column(db.String(10), primary_key=True)
@@ -12,12 +12,18 @@ class MemberModel(db.Model):
     state = db.Column(db.String(50), nullable=False)
     city = db.Column(db.String(50), nullable=False)
     street = db.Column(db.Integer)
+    password = db.Column(db.String(255), nullable=False)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+  
     def __repr__(self):
         return f"<Member {self.member_name} - ID: {self.member_id}>"
     
     def to_dict(self):
-        """Convert the MemberModel instance into a dictionary format."""
         return {
             'member_id': self.member_id,
             'member_name': self.member_name,
@@ -29,4 +35,5 @@ class MemberModel(db.Model):
             'state': self.state,
             'city': self.city,
             'street': self.street,
+            
         }

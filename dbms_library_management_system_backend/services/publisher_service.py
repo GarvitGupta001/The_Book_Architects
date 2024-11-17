@@ -1,7 +1,7 @@
 from utils.utils import db
 from models.publisher_model import PublisherModel
 
-# Create a new publisher
+
 def create_publisher(data):
     new_publisher = PublisherModel(
         publisher_id=data.get('publisher_id'),
@@ -13,12 +13,12 @@ def create_publisher(data):
     db.session.commit()
     return new_publisher
 
-# Retrieve a publisher by ID
+
 def get_publisher_by_id(publisher_id):
     publisher= PublisherModel.query.get(publisher_id)
     return publisher.to_dict()
 
-# Update publisher information
+
 def update_publisher(publisher_id, publisher_name=None, publisher_address=None, about=None):
     publisher = get_publisher_by_id(publisher_id)
     if publisher:
@@ -32,7 +32,7 @@ def update_publisher(publisher_id, publisher_name=None, publisher_address=None, 
         return publisher.to_dict()
     return publisher
 
-# Delete a publisher by ID
+
 def delete_publisher(publisher_id):
     publisher = get_publisher_by_id(publisher_id)
     if publisher:

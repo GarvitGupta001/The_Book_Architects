@@ -1,5 +1,5 @@
 from utils.utils import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
 class EmployeeModel(db.Model):
     __tablename__ = 'employee'
     employee_id = db.Column(db.String(10), primary_key=True)
@@ -9,12 +9,20 @@ class EmployeeModel(db.Model):
     gender = db.Column(db.String(10), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     date_of_joining = db.Column(db.Date, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
 
     def __repr__(self):
         return f"<Employee {self.employee_name}>"
     
     def to_dict(self):
-        """Convert the EmployeeModel instance into a dictionary format."""
+       
         return {
             'employee_id': self.employee_id,
             'employee_name': self.employee_name,
@@ -23,4 +31,5 @@ class EmployeeModel(db.Model):
             'gender': self.gender,
             'date_of_birth': self.date_of_birth.isoformat() if self.date_of_birth else None,
             'date_of_joining': self.date_of_joining.isoformat() if self.date_of_joining else None,
+            
         }

@@ -13,7 +13,6 @@ class AuthorModel(db.Model):
     def __repr__(self):
         return f"<Author {self.author_name}>"
     def to_dict(self):
-        """Convert the AuthorModel instance into a dictionary format."""
         return {
             'author_id': self.author_id,
             'author_name': self.author_name,

@@ -1,7 +1,6 @@
 from utils.utils import db
 from models.vendor_model import VendorModel
 
-# Add a new vendor
 def add_vendor(data):
     vendor = VendorModel(
         vendor_id=data.get('vendor_id'),
@@ -13,12 +12,11 @@ def add_vendor(data):
     db.session.commit()
     return vendor
 
-# Retrieve a vendor by ID
 def get_vendor_by_id(vendor_id):
     vendor= VendorModel.query.get(vendor_id)
     return vendor.to_dict() if vendor else None
 
-# Update vendor details
+
 def update_vendor(vendor_id, vendor_name=None, vendor_address=None, about=None):
     vendor = VendorModel.query.get(vendor_id)
     if vendor:
@@ -33,7 +31,7 @@ def update_vendor(vendor_id, vendor_name=None, vendor_address=None, about=None):
         return vendor.to_dict()
     return vendor
 
-# Delete a vendor by ID
+
 def delete_vendor(vendor_id):
     vendor = VendorModel.query.get(vendor_id)
     if vendor:

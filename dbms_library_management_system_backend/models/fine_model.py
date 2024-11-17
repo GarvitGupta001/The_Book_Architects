@@ -12,7 +12,6 @@ class FineModel(db.Model):
     def __repr__(self):
         return f"<Fine {self.fine_id} - Amount: {self.amount}>"
     def to_dict(self):
-        """Convert the FineModel instance into a dictionary format."""
         return {
             'fine_id': self.fine_id,
             'amount': self.amount,

@@ -11,7 +11,7 @@ class ShelfModel(db.Model):
     def __repr__(self):
         return f"<Shelf {self.shelf_id} - Floor: {self.shelf_floor}>"
     def to_dict(self):
-        """Convert the ShelfModel instance into a dictionary format."""
+        
         return {
             'shelf_id': self.shelf_id,
             'quantity': self.quantity,

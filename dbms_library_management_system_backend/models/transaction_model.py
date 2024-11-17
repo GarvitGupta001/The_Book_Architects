@@ -25,7 +25,6 @@ class TransactionModel(db.Model):
         return f"<Transaction {self.transaction_id} - {self.transaction_type}>"
     
     def to_dict(self):
-        """Convert the TransactionModel instance into a dictionary format."""
         return {
             'transaction_id': self.transaction_id,
             'transaction_type': self.transaction_type,

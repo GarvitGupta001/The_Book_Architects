@@ -25,7 +25,6 @@ class BookModel(db.Model):
     def __repr__(self):
         return f"<Book {self.book_title}>"
     def to_dict(self):
-        """Convert the BookModel instance into a dictionary format."""
         return {
             'book_id': self.book_id,
             'author_id': self.author_id,

@@ -1,7 +1,6 @@
 from utils.utils import db
 from models.book_model import BookModel
 
-# Create a new book
 def create_book(data):
     new_book = BookModel(
         book_id=data.get('book_id'),
@@ -25,12 +24,11 @@ def create_book(data):
     db.session.commit()
     return new_book
 
-# Read (retrieve) a book by ID
+
 def get_book_by_id(book_id):
     book= BookModel.query.get(book_id)
     return book.to_dict()
 
-# Update a book’s information
 def update_book(book_id, author_id=None, book_title=None, publisher_id=None, vendor_id=None, shelf_id=None,
                 category=None, price=None, language_name=None, subject_name=None, genre=None,
                 date_of_publishing=None, date_of_addition=None, shelf_date=None, bought_on=None, availability=None):
@@ -57,7 +55,6 @@ def update_book(book_id, author_id=None, book_title=None, publisher_id=None, ven
         if genre:
             book.genre = genre.get('genre', book.genre)
         
-        # Handling dates if they are provided
         if date_of_publishing:
             book.date_of_publishing = date_of_publishing.get('date_of_publishing', book.date_of_publishing)
         if date_of_addition:
@@ -76,7 +73,7 @@ def update_book(book_id, author_id=None, book_title=None, publisher_id=None, ven
     return book
 
 
-# Delete a book by ID
+
 def delete_book(book_id):
     book = get_book_by_id(book_id)
     if book:
