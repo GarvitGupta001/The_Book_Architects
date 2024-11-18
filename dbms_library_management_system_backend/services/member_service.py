@@ -14,7 +14,10 @@ def create_member(data):
         state=data.get('state'),
         city=data.get('city'),
         street=data.get('street'),
-        password=data.get('password')
+        password=data.get('password'),
+        member_email=data.get['employee_email'],
+        member_phone=data.get['employee_phone'],
+        gender=data.get['gender'],
     )
     db.session.add(new_member)
     db.session.commit()
@@ -26,7 +29,7 @@ def get_member_by_id(member_id):
     return member.to_dict()
 
 def update_member(member_id, member_name=None, member_type=None, date_of_birth=None, date_of_joining=None,
-                  member_course=None, country=None, state=None, city=None, street=None, password= None):
+                  member_course=None, country=None, state=None, city=None, street=None, password= None, member_email=None, member_phone=None, gender=None):
     member = MemberModel.query.get(member_id )
     if member:
        
@@ -50,6 +53,13 @@ def update_member(member_id, member_name=None, member_type=None, date_of_birth=N
             member.street = street
         if password:
             member.password= password
+        if member_email:
+            member.member_email= member_email
+        if member_phone:
+            member.member_phone= member_phone
+        if gender:
+            member.gender= gender
+        
 
         db.session.commit()
         return member.to_dict() 
@@ -80,6 +90,9 @@ def signup_member(data):
         state=data['state'],
         city=data['city'],
         street=data['street'],
+        member_email=data['member_email'],
+        member_phone=data['member_phone'],
+        gender=data['gender'],
     )
     
     new_member.set_password(data['password'])

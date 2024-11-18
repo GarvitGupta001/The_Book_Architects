@@ -10,7 +10,11 @@ def create_employee(data):
         gender=data.get('gender'),
         date_of_birth=data.get('date_of_birth'),
         date_of_joining=data.get('date_of_joining'),
-        password=data.get('password')
+        password=data.get('password'),
+        country=data.get('country'),
+        state=data.get('state'),
+        city=data.get('city'),
+        street=data.get('street'),
     )
     db.session.add(new_employee)
     db.session.commit()
@@ -20,7 +24,7 @@ def get_employee_by_id(employee_id):
     employee= EmployeeModel.query.get(employee_id)
     return employee.to_dict()
 
-def update_employee(employee_id, employee_name=None, employee_email=None, employee_phone=None, gender=None, date_of_birth=None, date_of_joining=None, password=None):
+def update_employee(employee_id, employee_name=None, employee_email=None, employee_phone=None, gender=None, date_of_birth=None, date_of_joining=None, password=None, country=None, state=None, city= None, street=None):
     employee = EmployeeModel.query.get(employee_id)
     if employee:
       
@@ -38,6 +42,15 @@ def update_employee(employee_id, employee_name=None, employee_email=None, employ
             employee.date_of_joining =date_of_joining
         if password:
             employee.password= password
+        if country:
+            employee.country= country
+        if state:
+            employee.state= state
+        if city:
+            employee.city= city
+        if street:
+            employee.street= street
+
 
         db.session.commit() 
         return employee.to_dict() 
@@ -65,7 +78,11 @@ def signup_employee(data):
         employee_phone=data['employee_phone'],
         gender=data['gender'],
         date_of_birth=data['date_of_birth'],
-        date_of_joining=data['date_of_joining']
+        date_of_joining=data['date_of_joining'],
+        country=data('country'),
+        state=data('state'),
+        city=data('city'),
+        street=data('street')
     )
     new_employee.set_password(data['password'])
     db.session.add(new_employee)

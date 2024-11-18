@@ -13,6 +13,9 @@ class MemberModel(db.Model):
     city = db.Column(db.String(50), nullable=False)
     street = db.Column(db.Integer)
     password = db.Column(db.String(255), nullable=False)
+    member_email = db.Column(db.String(50), nullable=False)
+    member_phone = db.Column(db.BigInteger, nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -35,5 +38,8 @@ class MemberModel(db.Model):
             'state': self.state,
             'city': self.city,
             'street': self.street,
+            'member_email': self.member_email,
+            'member_phone': self.member_phone,
+            'gender': self.gender,
             
         }
