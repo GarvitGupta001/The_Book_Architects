@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.employee_service import create_employee, get_employee_by_id, update_employee, delete_employee,  signup_employee, login_employee
+from services.employee_service import create_employee, get_employee_by_id, update_employee, delete_employee,  signup_employee, login_employee, logout_empoyee
 from models.employee_model import EmployeeModel 
 employee_blueprint = Blueprint('employees', __name__)
 
@@ -39,25 +39,25 @@ def remove_employee(employee_id):
 def signup():
 
     data = request.json
-    if not data.get('employee_id') or not data.get('password'):
-        return jsonify({'message': 'Employee ID and password are required'}), 400
+    if not data.get('employee_email') or not data.get('password'):
+        return jsonify({'message': 'Employee email and password are required'}), 400
 
     new_employee = signup_employee(data)
     if not new_employee:
         return jsonify({'message': 'Employee ID already exists'}), 400
 
-    return jsonify(new_employee.to_dict()), 201
+    return jsonify({"message": "Signup successful","employee":new_employee.to_dict()}), 201
 
 @employee_blueprint.route('/employees/login', methods=['POST'])
 def login():
     data = request.json
-    employee_id = data.get('employee_id')
+    employee_email = data.get('employee_email')
     password = data.get('password')
 
-    if not employee_id or not password:
+    if not employee_email or not password:
         return jsonify({'message': 'Employee ID and password are required'}), 400
 
-    employee = login_employee(employee_id, password)
+    employee = login_employee(employee_email, password)
     if not employee:
         return jsonify({'message': 'Invalid credentials'}), 401
 
@@ -65,3 +65,11 @@ def login():
         'message': 'Login successful',
         'employee': employee.to_dict()
     }), 200
+
+
+@employee_blueprint.route('/employees/logout', methods=['POST'])
+def logout():
+    response = logout_empoyee()
+    if "message" in response:
+        return jsonify(response), 200
+    return jsonify(response), 400

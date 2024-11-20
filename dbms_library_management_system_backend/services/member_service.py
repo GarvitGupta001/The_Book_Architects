@@ -1,6 +1,6 @@
 from utils.utils import db
 from models.member_model import MemberModel
-
+from flask import session
 
 def create_member(data):
     new_member = MemberModel(
@@ -75,7 +75,7 @@ def delete_member(member_id):
 
 def signup_member(data):
     
-    if MemberModel.query.get(data['member_id']):
+    if MemberModel.query.filter_by(member_email=data['member_email']).first():
         return None
 
     
@@ -103,8 +103,16 @@ def signup_member(data):
     
     return new_member
 
-def login_member(member_id, password):
-    member= MemberModel.query.get(member_id)
+def login_member(member_email, password):
+    member= MemberModel.query.filter_by(member_email= member_email).first()
     if member and member.check_password(password):
+        session['logged_in']= True
+        session['member_email']= member.member_email      
         return member
     return None
+
+def logout_member():
+    if 'logged_in' in session:
+        session.clear()
+        return {"message": "Logout successful"}
+    return {"error": "No active session"}

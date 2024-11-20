@@ -81,3 +81,24 @@ def delete_book(book_id):
         db.session.commit()
         return True
     return False
+def search_books(book_name):
+    query = BookModel.query
+
+    # Searching books by book title using ilike for case-insensitive matching
+    query = query.filter(BookModel.book_title.ilike(f"%{book_name}%"))
+    
+    books = query.all()
+    return [book.to_dict() for book in books]
+
+def get_books_by_genre(genre):
+    books = db.session.query(BookModel).filter(BookModel.genre == genre).all()
+    return [book.to_dict() for book in books]
+
+
+def get_books_by_author_and_publisher(author_id, publisher_id):
+    books = db.session.query(BookModel).filter(
+        BookModel.author_id == author_id,
+        BookModel.publisher_id == publisher_id
+    ).all()
+
+    return [book.to_dict() for book in books]

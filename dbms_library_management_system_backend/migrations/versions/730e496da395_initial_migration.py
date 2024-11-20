@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 507c31cc57cf
+Revision ID: 730e496da395
 Revises: 
-Create Date: 2024-11-17 23:50:02.032980
+Create Date: 2024-11-20 12:39:02.485877
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '507c31cc57cf'
+revision = '730e496da395'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,6 +34,10 @@ def upgrade():
     sa.Column('gender', sa.String(length=10), nullable=False),
     sa.Column('date_of_birth', sa.Date(), nullable=False),
     sa.Column('date_of_joining', sa.Date(), nullable=False),
+    sa.Column('country', sa.String(length=50), nullable=False),
+    sa.Column('state', sa.String(length=50), nullable=False),
+    sa.Column('city', sa.String(length=50), nullable=False),
+    sa.Column('street', sa.Integer(), nullable=True),
     sa.Column('password', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('employee_id')
     )
@@ -49,6 +53,9 @@ def upgrade():
     sa.Column('city', sa.String(length=50), nullable=False),
     sa.Column('street', sa.Integer(), nullable=True),
     sa.Column('password', sa.String(length=255), nullable=False),
+    sa.Column('member_email', sa.String(length=50), nullable=False),
+    sa.Column('member_phone', sa.BigInteger(), nullable=False),
+    sa.Column('gender', sa.String(length=10), nullable=False),
     sa.PrimaryKeyConstraint('member_id')
     )
     op.create_table('publisher',
@@ -99,7 +106,7 @@ def upgrade():
     op.create_table('fine',
     sa.Column('fine_id', sa.String(length=10), nullable=False),
     sa.Column('amount', sa.Float(), nullable=False),
-    sa.Column('days_delay', sa.Date(), nullable=False),
+    sa.Column('days_delay', sa.Integer(), nullable=False),
     sa.Column('member_id', sa.String(length=10), nullable=False),
     sa.ForeignKeyConstraint(['member_id'], ['member.member_id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('fine_id')

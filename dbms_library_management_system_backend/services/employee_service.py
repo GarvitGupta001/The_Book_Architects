@@ -1,6 +1,6 @@
 from utils.utils import db
 from models.employee_model import EmployeeModel
-
+from flask import session
 def create_employee(data):
     new_employee = EmployeeModel(
         employee_id=data.get('employee_id'),
@@ -68,7 +68,7 @@ def delete_employee(employee_id):
 
 def signup_employee(data):
     
-    if EmployeeModel.query.get(data['employee_id']):
+    if EmployeeModel.query.filter_by(employee_email=data['employee_email']).first():
         return None
 
     new_employee = EmployeeModel(
@@ -79,10 +79,10 @@ def signup_employee(data):
         gender=data['gender'],
         date_of_birth=data['date_of_birth'],
         date_of_joining=data['date_of_joining'],
-        country=data('country'),
-        state=data('state'),
-        city=data('city'),
-        street=data('street')
+        country=data['country'],
+        state=data['state'],
+        city=data['city'],
+        street=data['street']
     )
     new_employee.set_password(data['password'])
     db.session.add(new_employee)
@@ -91,8 +91,16 @@ def signup_employee(data):
     return new_employee
 
 
-def login_employee(employee_id, password):
-    employee = EmployeeModel.query.get(employee_id)
+def login_employee(employee_email, password):
+    employee = EmployeeModel.query.filter_by(employee_email= employee_email).first()
     if employee and employee.check_password(password): 
+        session['logged_in']= True
+        session['employee_email']= employee.employee_email
         return employee
     return None
+
+def logout_empoyee():
+    if 'logged_in' in session:
+        session.clear()
+        return {"message": "Logout successful"}
+    return {"error": "No active session"}

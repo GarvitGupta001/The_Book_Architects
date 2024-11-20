@@ -5,9 +5,11 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from utils.utils import db
 from utils.utils import migrate
+import os 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = Config_.SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = Config_.SQLALCHEMY_TRACK_MODIFICATIONS
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'fallback_secret_key')
 db.init_app(app)
 migrate.init_app(app, db)
 

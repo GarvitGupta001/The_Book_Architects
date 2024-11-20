@@ -4,7 +4,7 @@ class EmployeeModel(db.Model):
     __tablename__ = 'employee'
     employee_id = db.Column(db.String(10), primary_key=True)
     employee_name = db.Column(db.String(50), nullable=False)
-    employee_email = db.Column(db.String(50), nullable=False)
+    employee_email = db.Column(db.String(50),unique=True ,nullable=False)
     employee_phone = db.Column(db.BigInteger, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)

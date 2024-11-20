@@ -13,7 +13,7 @@ class MemberModel(db.Model):
     city = db.Column(db.String(50), nullable=False)
     street = db.Column(db.Integer)
     password = db.Column(db.String(255), nullable=False)
-    member_email = db.Column(db.String(50), nullable=False)
+    member_email = db.Column(db.String(50),unique= True, nullable=False)
     member_phone = db.Column(db.BigInteger, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
 
