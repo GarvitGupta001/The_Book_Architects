@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
+{% endblock %}
+{% block content %}
+<main id="main">
+    <section class="search-section">
+        {% if current_user.is_authenticated %}
+        <h1>Welcome, {{current_user.name}}</h1>
+        {% else %}
+        <h1>Welcome, Guest</h1>
+        {% endif %}
+        <div class="search-box">
+            <form>
+                <input type="text" id="searchInput" placeholder="Search for a book" name="search" >
+            </form>
+        </div>
+        <p id="prompt"></p>
+    </section>
+    <section class="book-display" id="results">
+    </section>
+    <section class="bg-image">
+        <img src="{{  url_for('static', filename='media/backgrounds/login_signup_home.png')  }}" alt="">
+    </section>
+</main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
+{% endblock %}

@@ -62,11 +62,6 @@ svg.nav-button {
     transition: fill 0.2s linear;
 }
 
-.menu_dots {
-    fill: #FFFFFF;
-    transition: all 0.2s linear;
-}
-
 .sidenav {
     height: 100%;
     width: 250px;
@@ -74,10 +69,12 @@ svg.nav-button {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: #12263f; 
     overflow-x: hidden;
     padding-top: 60px;
     transition: width 0.2s linear;
+    border-radius: 0px 10px 10px 0px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .disappear {
@@ -88,10 +85,11 @@ svg.nav-button {
 .sidenav a,
 .dropbtn {
     padding: 6px 8px 6px 16px;
+    border-radius: 0px;
     text-decoration: none;
     white-space: nowrap;
     font-size: 20px;
-    color: #000000;
+    color: #ffffff;
     display: block;
     border: none;
     background: none;

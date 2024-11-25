@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, jsonify
-from Controllers.controller import authenticaionController, SearchController, BookController, userController, employeeController
+from Controllers.controller import authenticaionController, SearchController, BookController, userController, employeeController, authorController, vendorController, publisherController
 from flask_login import login_required, current_user, logout_user
 
 bp = Blueprint('bp', __name__)
@@ -41,24 +41,131 @@ def dashboard():
 @bp.route('/add/admin', methods=['POST'])
 def add_empoyee():
     admin = employeeController.add_employee()
-    return
+    return admin
 
 @bp.route('/add_book', methods=['GET', 'POST'])
 def add_book():
-    return render_template('add_book.html')
+    if request.method == 'POST':
+        book = BookController.add_book()
+        if 'error' in book:
+            return render_template('add_book.html', error=book['error'])
+        return render_template('add_book.html', error='')
+    return render_template('add_book.html', error='')
 
 @bp.route('/add_author', methods=['GET', 'POST'])
 def add_author():
-    return render_template('add_author.html')
+    if request.method == 'POST':
+        author = authorController.add_author()
+        if 'error' in author:
+            return render_template('add_author.html', error=author['error'])
+        return render_template('add_author.html', error='')
+    return render_template('add_author.html', error='')
 
 @bp.route('/add_vendor', methods=['GET', 'POST'])
 def add_vendor():
-    return render_template('add_vendor.html')
+    if request.method == 'POST':
+        vendor = vendorController.add_vendor()
+        if 'error' in vendor:
+            return render_template('add_vendor.html', error=vendor['error'])
+        return render_template('add_vendor.html', error='')
+    return render_template('add_vendor.html', error='')
 
 @bp.route('/add_publisher', methods=['GET', 'POST'])
 def add_publisher():
-    return render_template('add_publisher.html')
+    if request.method == 'POST':
+        publisher = publisherController.add_publisher()
+        if 'error' in publisher:
+            return render_template('add_publisher.html', error=publisher['error'])
+        return render_template('add_publisher.html', error='')
+    return render_template('add_publisher.html', error='')
 
 @bp.route('/add_transaction', methods=['GET', 'POST'])
 def add_transaction():
     return render_template('add_transaction.html')
+
+@bp.route('/update_book', methods=['GET', 'POST'])
+def update_book():
+    if request.method == 'POST':
+        book = BookController.update_book()
+        if 'error' in book:
+            return render_template('update_book.html', error=book['error'])
+        return render_template('update_book.html', error='')
+    return render_template('update_book.html', error='')
+
+@bp.route('/update_author', methods=['GET', 'POST'])
+def update_author():
+    if request.method == 'POST':
+        author = authorController.update_author()
+        if 'error' in author:
+            return render_template('update_author.html', error=author['error'])
+        return render_template('update_author.html', error='')
+    return render_template('update_author.html', error='')
+
+@bp.route('/update_vendor', methods=['GET', 'POST'])
+def update_vendor():
+    if request.method == 'POST':
+        vendor = vendorController.update_vendor()
+        if 'error' in vendor:
+            return render_template('update_vendor.html', error=vendor['error'])
+        return render_template('update_vendor.html', error='')
+    return render_template('update_vendor.html', error='')
+
+@bp.route('/update_publisher', methods=['GET', 'POST'])
+def update_publisher():
+    if request.method == 'POST':
+        publisher = publisherController.update_publisher()
+        if 'error' in publisher:
+            return render_template('update_publisher.html', error=publisher['error'])
+        return render_template('update_publisher.html', error='')
+    return render_template('update_publisher.html', error='')
+
+@bp.route('/update_transaction', methods=['GET', 'POST'])
+def update_transaction():
+    return render_template('update_transaction.html')
+
+@bp.route('/delete_book', methods=['GET', 'POST'])
+def delete_book():
+    if request.method == 'POST':
+        book = BookController.delete_book()
+        if 'error' in book:
+            return render_template('delete_book.html', error=book['error'])
+        return render_template('delete_book.html', error='')
+    return render_template('delete_book.html', error='')
+
+@bp.route('/delete_author', methods=['GET', 'POST'])
+def delete_author():
+    if request.method == 'POST':
+        author = authorController.delete_author()
+        if 'error' in author:
+            return render_template('delete_author.html', error=author['error'])
+        return render_template('delete_author.html', error='')
+    return render_template('delete_author.html', error='')
+
+@bp.route('/delete_vendor', methods=['GET', 'POST'])
+def delete_vendor():
+    if request.method == 'POST':
+        vendor = vendorController.delete_vendor()
+        if 'error' in vendor:
+            return render_template('delete_vendor.html', error=vendor['error'])
+        return render_template('delete_vendor.html', error='')
+    return render_template('delete_vendor.html', error='')
+
+@bp.route('/delete_publisher', methods=['GET', 'POST'])
+def delete_publisher():
+    if request.method == 'POST':
+        publisher = publisherController.delete_publisher()
+        if 'error' in publisher:
+            return render_template('delete_publisher.html', error=publisher['error'])
+        return render_template('delete_publisher.html', error='')
+    return render_template('delete_publisher.html', error='')
+
+@bp.route('/book_search', methods=['GET'])
+def search_book():
+    search = request.args.get('search').lower()
+    results = SearchController.search_book(search)
+    return jsonify(results)
+
+@bp.route('/book/<int:book_id>', methods=['GET'])
+def book_view(book_id):
+    book = BookController.book_view(book_id)
+    return render_template('book_view.html', book=book)
