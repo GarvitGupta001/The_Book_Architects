@@ -11,7 +11,8 @@ This Library Management Database is designed to efficiently manage the records o
   Shubhika Sinha-23293916087  
   Prayas Yadav- 23293916032  
   Garvit Gupta- 23293916021  
-Contributions-
+  
+Contributions-  
 Jhanvi -Converted comprehensive ER diagrams into normalized relational database tables, ensuring optimal schema design and adherence to database normalization principles. Developed the complete backend architecture for the project, implementing robust models, controllers, and services.  
 
 Shubhika -  
