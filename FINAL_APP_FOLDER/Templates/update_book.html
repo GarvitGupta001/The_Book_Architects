@@ -10,19 +10,22 @@
         </div>
         <div>
             <label for="book_title">Book Title:</label>
-            <input type="text" id="book_title" name="title" required>
+            <input type="text" id="book_title" name="title" class="all_fill" required>
+            <ul id="bookSuggestionList" class="suggestionList"></ul>
         </div>
         <div>
             <label for="book_preface">Book Preface:</label>
-            <input type="text" id="book_preface" name="preface" required>
+            <textarea type="text" id="book_preface" name="preface" style="height:fit-content" required></textarea>
         </div>
         <div>
             <label for="publisher_name">Publisher:</label>
             <input type="text" id="publisher_name" name="publisher_name" required>
+            <ul id="publisherSuggestionList" class="suggestionList"></ul>
         </div>
         <div>
             <label for="vendor_name">Vendor:</label>
             <input type="text" id="vendor_name" name="vendor_name" required>
+            <ul id="vendorSuggestionList" class="suggestionList"></ul>
         </div>
         <div>
             <label for="shelf_id">Shelf Id:</label>
@@ -51,4 +54,8 @@
         <button type="submit">Update</button>
     </form>
 </main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/update_book.js') }}"></script>
+<script src="{{ url_for('static', filename='js/suggestor.js') }}"></script>
 {% endblock %}

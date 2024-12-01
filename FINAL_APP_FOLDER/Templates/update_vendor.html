@@ -11,6 +11,7 @@
         <div>
             <label for="vendor_name">Vendor:</label>
             <input type="text" id="vendor_name" name="name" required>
+            <ul id="vendorSuggestionList" class="suggestionList"></ul>
         </div>
         <div>
             <label for="vendor_address">Vendor Address: </label>
@@ -23,4 +24,7 @@
         <button type="submit">Update</button>
     </form>
 </main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/suggestor.js') }}"></script>
 {% endblock %}

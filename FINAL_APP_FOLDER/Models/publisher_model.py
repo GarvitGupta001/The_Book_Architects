@@ -12,8 +12,8 @@ class Publishers(db.Model):
     def to_dict(self):
         """Convert the PublisherModel instance into a dictionary format."""
         return {
-            'publisher_id': self.id,
-            'publisher_name': self.name,
-            'publisher_address': self.address,
+            'id': self.id,
+            'name': self.name,
+            'address': self.address,
             'about':self.about,
         }

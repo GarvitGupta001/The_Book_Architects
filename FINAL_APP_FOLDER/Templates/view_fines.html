@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view_fines.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container" id="main">
+    <main>
+        <div class="container">
+            <section class="fine-section">
+                <div class="header">
+                    <h2>View Your Fine History</h2>
+                    <h3>{{ current_user.name }}, Your Fines</h3>
+                </div>
+                <table class="fine-table">
+                    <thead>
+                        <tr>
+                            <th>Fine Id</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Book Title</th>
+                            <th>Days Delay</th>
+                            <th>Amount</th>
+                            <th>Issued To</th>
+                            <th>Issued By</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    {% for fine in fines %}
+                    <tbody>
+                        <tr>
+                            <td>{{fine["id"]}}</td>
+                            <td>{{fine["date"]}}</td>
+                            <td>{{fine["date"]}}</td>
+                            <td>{{fine["book"]["title"]}}</td>
+                            <td>{{fine["days_delay"]}}</td>
+                            <td>{{fine["amount"]}}</td>
+                            <td>{{fine["member"]["name"]}}</td>
+                            <td>{{fine["employee"]["name"]}}</td>
+                            <td>{{fine["status"]}}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </section>
+        </div>
+    </main>
+</div>
+{% endblock %}

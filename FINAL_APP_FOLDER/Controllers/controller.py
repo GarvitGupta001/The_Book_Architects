@@ -1,5 +1,5 @@
 from flask import request
-from Services.service import userService, SearchService, BookService, employeeService, authorService, vendorService, publisherService
+from Services.service import userService, SearchService, BookService, employeeService, authorService, vendorService, publisherService, transactionService
 from flask import Blueprint, jsonify, request
 from Views.view import View
 from werkzeug.utils import secure_filename
@@ -23,7 +23,7 @@ class authenticaionController:
     def login():
         mail = request.form.get('email')
         password = request.form.get('password')
-        type = request.form.get('user_type')
+        type = request.form.get('type')
         result = userService.log_in(mail=mail, password=password,type=type)
         return result
     
@@ -31,6 +31,26 @@ class SearchController:
     @staticmethod
     def search_book(book):
         return SearchService.get_books_by_name_partial(book)
+    
+    @staticmethod
+    def search_author(author):
+        return SearchService.get_author_by_name_partial(author)
+    
+    @staticmethod
+    def search_publisher(publisher):
+        return SearchService.get_publisher_by_name_partial(publisher)
+    
+    @staticmethod
+    def search_vendor(vendor):
+        return SearchService.get_vendor_by_name_partial(vendor)
+    
+    @staticmethod
+    def search_member(member):
+        return SearchService.get_member_by_name_partial(member)
+    
+    @staticmethod
+    def search_employee(employee):
+        return SearchService.get_employee_by_name_partial(employee)
     
 class BookController:
     @staticmethod
@@ -96,6 +116,12 @@ class userController:
                                                city=data['city'],
                                                street=data['street'])
         return updated_user
+    
+    @staticmethod
+    def get_users():
+        users = userService.get_all_members()
+        user_list = [user.to_dict() for user in users]
+        return user_list
     
 class employeeController:
     @staticmethod
@@ -200,3 +226,22 @@ class publisherController:
         else:
             publisher = publisherService.remove_publisher(publisher)
             return publisher.to_dict()
+        
+class transactionController:
+    @staticmethod
+    def add_transaction():
+        data = request.form
+        new_transaction = transactionService.add_transaction(data)
+        return new_transaction.to_dict()
+
+    @staticmethod
+    def get_for_member(member_id):
+        transactions = transactionService.get_for_member(member_id)
+        transaction_list = [transaction.to_dict() for transaction in transactions]
+        return transaction_list
+    
+    @staticmethod
+    def get_for_employee(employee_id):
+        transactions = transactionService.get_for_employee(employee_id)
+        transaction_list = [transaction.to_dict() for transaction in transactions]
+        return transaction_list

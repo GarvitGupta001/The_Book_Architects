@@ -13,9 +13,9 @@ class Vendors(db.Model):
     def to_dict(self):
         """Convert the VendorModel instance into a dictionary format."""
         return {
-            'vendor_id': self.id,
-            'vendor_name': self.name,
-            'vendor_address': self.address,
+            'id': self.id,
+            'name': self.name,
+            'address': self.address,
             'about': self.about,
         }
     

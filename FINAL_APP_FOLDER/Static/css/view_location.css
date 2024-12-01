@@ -4,7 +4,7 @@ main {
 }
 
 /* Form container styling */
-#delete_book-form {
+#location-form {
     background-color: #12263f; /* Slightly lighter shade than body background */
     padding: 30px;
     border-radius: 10px;
@@ -16,9 +16,10 @@ main {
 }
 
 /* Input and select field styling */
-#delete_book-form input, 
-#delete_book-form select, 
-#delete_book-form button {
+#location-form input, 
+#location-form select, 
+#location-form button,
+#location-form textarea {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -31,15 +32,16 @@ main {
 }
 
 /* Input focus styling */
-#delete_book-form input:focus, 
-#delete_book-form select:focus {
+#location-form input:focus, 
+#location-form select:focus,
+#location-form textarea:focus {
     outline: none;
     border-color: #4ea1d3; /* Brighter border for focus */
     box-shadow: 0px 0px 5px rgba(78, 161, 211, 0.8);
 }
 
 /* Label styling */
-#delete_book-form label {
+#location-form label {
     font-size: 14px;
     font-weight: bold;
     display: block;
@@ -47,22 +49,15 @@ main {
 }
 
 /* Button styling */
-#delete_book-form button {
-    background-color: #ce0606; /* Brighter blue for contrast */
+#location-form button {
+    background-color: #e18e00; /* Brighter blue for contrast */
     border: none;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-#delete_book-form button:hover {
-    background-color: #eb0202;
-    box-shadow: 0px 4px 15px rgba(235, 3, 3, 0.532);
-}
 
 /* Dividers between input fields */
-#delete_book-form div {
+#location-form div {
     margin-bottom: 20px;
     width: 100%;
     position: relative;
@@ -84,7 +79,7 @@ main {
 }
 
 /* Add rounded corners for all elements */
-input, select, button {
+input, select, button, textarea {
     border-radius: 5px;
 }
 
@@ -92,18 +87,35 @@ div.book_icon img{
     width: 100%; 
 }
 
-
-
-/* Button styling */
-#update_form-form button {
-    background-color: #e18e00; /* Brighter blue for contrast */
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+#suggestionList {
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 64px;
+    width: inherit;
+    background: #12263f;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 5px;
+    color: #ffffff91;
 }
 
-#update_form-form button:hover {
-    background-color: #ed9600;
-    box-shadow: 0px 4px 15px rgba(235, 107, 3, 0.532);
+#suggestionList li {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+#suggestionList li:hover {
+    background: #7a8da1;
+}
+
+textarea{
+    max-width: 100%;
+    min-width: 100%;
+    height: fit-content;
 }

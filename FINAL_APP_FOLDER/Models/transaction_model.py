@@ -16,9 +16,9 @@ class Transactions(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('book.id', onupdate="CASCADE"), nullable=False)
 
     # Relationships to retrieve related data if needed
-    employee = db.relationship('EmployeeModel', backref='transactions', lazy=True)
-    member = db.relationship('MemberModel', backref='transactions', lazy=True)
-    book = db.relationship('BookModel', backref='transactions', lazy=True)
+    employee = db.relationship('Employees', backref='transactions', lazy=True)
+    member = db.relationship('Members', backref='transactions', lazy=True)
+    book = db.relationship('Books', backref='transactions', lazy=True)
 
     def __repr__(self):
         return f"<Transaction {self.id} - {self.type}>"
@@ -26,12 +26,14 @@ class Transactions(db.Model):
     def to_dict(self):
         """Convert the TransactionModel instance into a dictionary format."""
         return {
-            'transaction_id': self.id,
-            'transaction_type': self.type,
-            'transaction_date': self.date if self.date else None,
+            'id': self.id,
+            'type': self.type,
+            'date': self.date if self.date else None,
             'employee_id': self.employee_id,
             'member_id': self.member_id,
             'book_id': self.book_id,
+            'book_title':Books.query.filter_by(id = self.book_id).first().title,
+            'author_name':Books.query.filter_by(id = self.book_id).first().to_dict()["author"],
             'employee': self.employee.to_dict() if self.employee else None,
             'member': self.member.to_dict() if self.member else None,
             'book': self.book.to_dict() if self.book else None

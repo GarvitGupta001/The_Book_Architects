@@ -11,6 +11,7 @@
         <div>
             <label for="author_name">Author:</label>
             <input type="text" id="author_name" name="name" required>
+            <ul id="authorSuggestionList" class="suggestionList"></ul>
         </div>
         <div>
             <label for="author_dob">Date of Birth: </label>
@@ -27,4 +28,7 @@
         <button type="submit">Update</button>
     </form>
 </main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/suggestor.js') }}"></script>
 {% endblock %}

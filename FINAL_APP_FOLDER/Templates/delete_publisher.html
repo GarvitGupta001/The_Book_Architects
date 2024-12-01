@@ -11,8 +11,12 @@
         <div>
             <label for="publisher_name">Publisher:</label>
             <input type="text" id="publisher_name" name="name" required>
+            <ul id="publisherSuggestionList" class="suggestionList"></ul>
         </div>
         <button type="submit">Delete</button>
     </form>
 </main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/suggestor.js') }}"></script>
 {% endblock %}

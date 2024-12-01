@@ -8,6 +8,7 @@ from Models.publisher_model import Publishers
 from Models.employee_model import Employees
 from Models.author_model import Authors
 from Models.vendor_model import Vendors
+from Models.transaction_model import Transactions
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -21,6 +22,12 @@ class userService:
 
     def get_employee_by_mail(mail):
         return Employees.query.filter_by(mail=mail).first()
+    
+    def get_member_by_name(name):
+        return Members.query.filter_by(name=name).first()
+
+    def get_employee_by_name(name):
+        return Employees.query.filter_by(name=name).first()
 
     @staticmethod
     def sign_up(name, password, dob, mail):
@@ -32,6 +39,7 @@ class userService:
 
     @staticmethod
     def log_in(mail, password, type):
+        user = None
         if type == 'member':
             user = userService.get_member_by_mail(mail)
             if not user:
@@ -39,7 +47,7 @@ class userService:
         elif type == 'admin':
             user = userService.get_employee_by_mail(mail)
             if not user:
-                return {'error': 'member not found'}
+                return {'error': 'admin not found'}
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
             if current_user.is_authenticated:
@@ -68,6 +76,10 @@ class userService:
     @staticmethod
     def is_allowed(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in config.ALLOWED_FORMATS
+    
+    @staticmethod
+    def get_all_members():
+        return Members.query.all()
 
 class employeeService:
     @staticmethod
@@ -174,9 +186,35 @@ class publisherService:
         return publisher
 
 class SearchService:
+    @staticmethod
     def get_books_by_name_partial(book_title):
         books = Books.query.filter(Books.title.ilike(f"%{book_title}%")).all()
         return [book.to_dict() for book in books] if books else []
+    
+    @staticmethod
+    def get_author_by_name_partial(author_name):
+        authors = Authors.query.filter(Authors.name.ilike(f"%{author_name}%")).all()
+        return [author.to_dict() for author in authors] if authors else []
+    
+    @staticmethod
+    def get_publisher_by_name_partial(publisher_name):
+        publishers = Publishers.query.filter(Publishers.name.ilike(f"%{publisher_name}%")).all()
+        return [publisher.to_dict() for publisher in publishers] if publishers else []
+    
+    @staticmethod
+    def get_vendor_by_name_partial(vendor_name):
+        vendors = Vendors.query.filter(Vendors.name.ilike(f"%{vendor_name}%")).all()
+        return [vendor.to_dict() for vendor in vendors] if vendors else []
+    
+    @staticmethod
+    def get_member_by_name_partial(member_name):
+        members = Members.query.filter(Members.name.ilike(f"%{member_name}%")).all()
+        return [member.to_dict() for member in members] if members else []
+    
+    @staticmethod
+    def get_employee_by_name_partial(employee_name):
+        employees = Employees.query.filter(Employees.name.ilike(f"%{employee_name}%")).all()
+        return [employee.to_dict() for employee in employees] if employees else []
     
 class BookService:
     def add_book(data, cover_page):
@@ -240,3 +278,38 @@ class BookService:
     def get_book_by_id(book_id):
         book = Books.query.filter_by(id=book_id).first()
         return book.to_dict()
+    
+class transactionService:
+    @staticmethod
+    def add_transaction(data):
+        new_transaction = Transactions(
+            type=data.get('type'),
+            employee_id=userService.get_employee_by_name(data.get('employee_name')).id,
+            member_id=userService.get_member_by_name(data.get('member_name')).id,
+            book_id=BookService.get_book_by_title(data.get('title')).id
+        )
+        db.session.add(new_transaction)
+        db.session.commit()
+        return new_transaction
+    
+    @staticmethod
+    def modify_transaction(transaction, data):
+            transaction.type=data.get('type'),
+            transaction.date=data.get('date'),
+            transaction.employee_id=userService.get_employee_by_name(data.get('employee_name')).id,
+            transaction.member_id=userService.get_member_by_name(data.get('member_name')).id,
+            transaction.title=data.get('title')
+            db.session.commit()
+            return transaction
+    
+    
+    @staticmethod
+    def get_for_member(member_id):
+        transactions=Transactions.query.filter_by(member_id=member_id).all()
+        return transactions
+    
+    @staticmethod
+    def get_for_employee(employee_id):
+        transactions=Transactions.query.filter_by(employee_id=employee_id).all()
+        return transactions
+    

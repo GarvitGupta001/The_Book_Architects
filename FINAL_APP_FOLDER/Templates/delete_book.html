@@ -11,8 +11,12 @@
         <div>
             <label for="title">Book Title:</label>
             <input type="text" id="book_title" name="title" required>
+            <ul id="bookSuggestionList" class="suggestionList"></ul>
         </div>
         <button type="submit">Delete</button>
     </form>
 </main>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/suggestor.js') }}"></script>
 {% endblock %}

@@ -15,9 +15,9 @@ class Authors(db.Model):
     def to_dict(self):
         """Convert the AuthorModel instance into a dictionary format."""
         return {
-            'author_id': self.id,
-            'author_name': self.name,
-            'author_dob': self.dob,
-            'author_origin': self.origin,
+            'id': self.id,
+            'name': self.name,
+            'dob': self.dob,
+            'origin': self.origin,
             'about':self.about,
         }
