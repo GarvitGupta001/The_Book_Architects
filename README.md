@@ -128,7 +128,7 @@ This documentation serves as an overview of the available routes and their funct
 **Team Members**:  
 - Jhanvi Nagori - 23293916025  
 - Shubhika Sinha - 23293916087  
-- Prayas Yadav - 23293916032  
+- Prayas  - 23293916032  
 - Garvit Gupta - 23293916021  
 
 
