@@ -119,6 +119,25 @@ This application provides various routes for managing library operations, user i
 
 This documentation serves as an overview of the available routes and their functionalities.
 
+### Packages and their use
+
+- **alembic==1.13.2**: Database migration tool for SQLAlchemy.
+- **blinker==1.8.2**: Signals library for event-driven programming in Python.
+- **click==8.1.7**: Python package for creating command-line interfaces.
+- **Flask==3.0.3**: Lightweight web framework for Python.
+- **Flask-Migrate==4.0.7**: Extension for handling Alembic migrations with Flask-SQLAlchemy.
+- **Flask-SQLAlchemy==3.1.1**: SQLAlchemy integration for Flask applications.
+- **itsdangerous==2.2.0**: Provides cryptographic utilities for securely signing data.
+- **Jinja2==3.1.4**: Template engine for Python, used in Flask.
+- **Mako==1.3.5**: A Python templating engine similar to Jinja2.
+- **MarkupSafe==2.1.5**: Prevents unsafe HTML or XML rendering in Python templates.
+- **PyMySQL==1.1.1**: MySQL database connector for Python.
+- **python-dotenv==1.0.1**: Loads environment variables from `.env` files into Python applications.
+- **SQLAlchemy==2.0.32**: Python SQL toolkit and Object Relational Mapper (ORM).
+- **typing_extensions==4.12.2**: Provides backported features from the `typing` module for older Python versions.
+- **Werkzeug==3.0.4**: WSGI utility library for Python, used as Flask's HTTP server.
+- **Flask-Login==0.6.3**: User session management for Flask applications.
+
 
 
 ## Team Information
@@ -128,7 +147,7 @@ This documentation serves as an overview of the available routes and their funct
 **Team Members**:  
 - Jhanvi Nagori - 23293916025  
 - Shubhika Sinha - 23293916087  
-- Prayas Yadav - 23293916032  
+- Prayas  - 23293916032  
 - Garvit Gupta - 23293916021  
 
 
