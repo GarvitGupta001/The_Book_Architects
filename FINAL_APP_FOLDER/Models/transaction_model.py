@@ -1,5 +1,5 @@
 from utils.utils import db
-from datetime import datetime
+from datetime import datetime, date
 from Models.employee_model import Employees
 from Models.book_model import Books
 from Models.member_model import Members
@@ -9,8 +9,8 @@ from datetime import datetime
 class Transactions(db.Model):
     __tablename__ = 'transaction'
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(10), nullable=False)  # "issue" or "return"
-    date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    issue_date = db.Column(db.Date, default=date.today, nullable=False)
+    return_date = db.Column(db.Date)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id', onupdate="CASCADE"), nullable=False)
     member_id = db.Column(db.Integer, db.ForeignKey('member.id', onupdate="CASCADE"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id', onupdate="CASCADE"), nullable=False)
@@ -27,8 +27,8 @@ class Transactions(db.Model):
         """Convert the TransactionModel instance into a dictionary format."""
         return {
             'id': self.id,
-            'type': self.type,
-            'date': self.date if self.date else None,
+            'issue_date': self.issue_date if self.issue_date else None,
+            'return_date': self.return_date if self.return_date else None,
             'employee_id': self.employee_id,
             'member_id': self.member_id,
             'book_id': self.book_id,

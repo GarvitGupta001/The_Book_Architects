@@ -231,8 +231,12 @@ class transactionController:
     @staticmethod
     def add_transaction():
         data = request.form
-        new_transaction = transactionService.add_transaction(data)
-        return new_transaction.to_dict()
+        if data.get('type') == 'issue':
+            transaction = transactionService.add_issue_transaction(data)
+        else: 
+            transaction = transactionService.add_return_transition(data)
+            fine = transactionService.add_fine(transaction.id)
+        return transaction.to_dict()
 
     @staticmethod
     def get_for_member(member_id):
@@ -245,3 +249,15 @@ class transactionController:
         transactions = transactionService.get_for_employee(employee_id)
         transaction_list = [transaction.to_dict() for transaction in transactions]
         return transaction_list
+    
+    @staticmethod
+    def get_fines_for_member(member_id):
+        transactions = transactionService.get_for_member(member_id)
+        fines = transactionService.get_fines_of_transactions(transactions)
+        return fines
+    
+    @staticmethod
+    def get_fines_for_employee(employee_id):
+        transactions = transactionService.get_for_employee(employee_id)
+        fines = transactionService.get_fines_of_transactions(transactions)
+        return fines

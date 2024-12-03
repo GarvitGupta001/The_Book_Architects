@@ -9,23 +9,29 @@ from Models.employee_model import Employees
 from Models.author_model import Authors
 from Models.vendor_model import Vendors
 from Models.transaction_model import Transactions
+from Models.fine_model import Fines
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, current_user
 from config import config
+from datetime import date, timedelta
 
 
 class userService:
+    @staticmethod
     def get_member_by_mail(mail):
         return Members.query.filter_by(mail=mail).first()
 
+    @staticmethod
     def get_employee_by_mail(mail):
         return Employees.query.filter_by(mail=mail).first()
-    
+
+    @staticmethod
     def get_member_by_name(name):
         return Members.query.filter_by(name=name).first()
 
+    @staticmethod
     def get_employee_by_name(name):
         return Employees.query.filter_by(name=name).first()
 
@@ -76,10 +82,11 @@ class userService:
     @staticmethod
     def is_allowed(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in config.ALLOWED_FORMATS
-    
+
     @staticmethod
     def get_all_members():
         return Members.query.all()
+
 
 class employeeService:
     @staticmethod
@@ -106,25 +113,25 @@ class authorService:
         db.session.add(new_author)
         db.session.commit()
         return new_author
-    
+
     @staticmethod
     def get_author_by_name(name):
         return Authors.query.filter_by(name=name).first()
-    
+
     @staticmethod
     def modify_author(author, data):
-        author.dob=data.get('dob'),
-        author.origin=data.get('origin'),
-        author.about=data.get('about')
+        author.dob = data.get('dob'),
+        author.origin = data.get('origin'),
+        author.about = data.get('about')
         db.session.commit()
         return author
-    
+
     @staticmethod
     def remove_author(author):
         db.session.delete(author)
         db.session.commit()
         return author
-
+ 
 class vendorService:
     @staticmethod
     def add_vendor(data):
@@ -136,25 +143,26 @@ class vendorService:
         db.session.add(new_vendor)
         db.session.commit()
         return new_vendor
-    
+
     @staticmethod
     def get_vendor_by_name(name):
         return Vendors.query.filter_by(name=name).first()
-    
+
     @staticmethod
     def modify_vendor(vendor, data):
-        vendor.name=data.get('name'),
-        vendor.address=data.get('address'),
-        vendor.about=data.get('about')
+        vendor.name = data.get('name'),
+        vendor.address = data.get('address'),
+        vendor.about = data.get('about')
         db.session.commit()
         return vendor
-    
+
     @staticmethod
     def remove_vendor(vendor):
         db.session.delete(vendor)
         db.session.commit()
         return vendor
-    
+
+
 class publisherService:
     @staticmethod
     def add_publisher(data):
@@ -166,64 +174,74 @@ class publisherService:
         db.session.add(new_publisher)
         db.session.commit()
         return new_publisher
-    
+
     @staticmethod
     def get_publisher_by_name(name):
         return Publishers.query.filter_by(name=name).first()
-    
+
     @staticmethod
     def modify_publisher(publisher, data):
-        publisher.name=data.get('name'),
-        publisher.address=data.get('address'),
-        publisher.about=data.get('about')
+        publisher.name = data.get('name'),
+        publisher.address = data.get('address'),
+        publisher.about = data.get('about')
         db.session.commit()
         return publisher
-    
+
     @staticmethod
     def remove_publisher(publisher):
         db.session.delete(publisher)
         db.session.commit()
         return publisher
 
+
 class SearchService:
     @staticmethod
     def get_books_by_name_partial(book_title):
         books = Books.query.filter(Books.title.ilike(f"%{book_title}%")).all()
         return [book.to_dict() for book in books] if books else []
-    
+
     @staticmethod
     def get_author_by_name_partial(author_name):
-        authors = Authors.query.filter(Authors.name.ilike(f"%{author_name}%")).all()
+        authors = Authors.query.filter(
+            Authors.name.ilike(f"%{author_name}%")).all()
         return [author.to_dict() for author in authors] if authors else []
-    
+
     @staticmethod
     def get_publisher_by_name_partial(publisher_name):
-        publishers = Publishers.query.filter(Publishers.name.ilike(f"%{publisher_name}%")).all()
+        publishers = Publishers.query.filter(
+            Publishers.name.ilike(f"%{publisher_name}%")).all()
         return [publisher.to_dict() for publisher in publishers] if publishers else []
-    
+
     @staticmethod
     def get_vendor_by_name_partial(vendor_name):
-        vendors = Vendors.query.filter(Vendors.name.ilike(f"%{vendor_name}%")).all()
+        vendors = Vendors.query.filter(
+            Vendors.name.ilike(f"%{vendor_name}%")).all()
         return [vendor.to_dict() for vendor in vendors] if vendors else []
-    
+
     @staticmethod
     def get_member_by_name_partial(member_name):
-        members = Members.query.filter(Members.name.ilike(f"%{member_name}%")).all()
+        members = Members.query.filter(
+            Members.name.ilike(f"%{member_name}%")).all()
         return [member.to_dict() for member in members] if members else []
-    
+
     @staticmethod
     def get_employee_by_name_partial(employee_name):
-        employees = Employees.query.filter(Employees.name.ilike(f"%{employee_name}%")).all()
+        employees = Employees.query.filter(
+            Employees.name.ilike(f"%{employee_name}%")).all()
         return [employee.to_dict() for employee in employees] if employees else []
-    
+
+
 class BookService:
     def add_book(data, cover_page):
         new_book = Books(
             title=data.get('title'),
             preface=data.get('preface'),
-            author_id=authorService.get_author_by_name(data.get('author_name')).id,
-            publisher_id=publisherService.get_publisher_by_name(data.get('publisher_name')).id,
-            vendor_id=vendorService.get_vendor_by_name(data.get('vendor_name')).id,
+            author_id=authorService.get_author_by_name(
+                data.get('author_name')).id,
+            publisher_id=publisherService.get_publisher_by_name(
+                data.get('publisher_name')).id,
+            vendor_id=vendorService.get_vendor_by_name(
+                data.get('vendor_name')).id,
             shelf_id=data.get('shelf_id'),
             language=data.get('language'),
             subject=data.get('subject'),
@@ -239,11 +257,11 @@ class BookService:
         db.session.add(new_book)
         db.session.commit()
         return new_book
-    
+
     @staticmethod
     def get_book_by_title(title):
         return Books.query.filter_by(title=title).first()
-    
+
     @staticmethod
     def upload_book_cover(file):
         filename = secure_filename(file.filename)
@@ -252,64 +270,122 @@ class BookService:
     @staticmethod
     def is_allowed(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in config.ALLOWED_FORMATS
-    
+
     @staticmethod
     def update_book(book, data):
-        book.title=data.get('title')
-        book.preface=data.get('preface')
-        book.publisher_id=publisherService.get_publisher_by_name(data.get('publisher_name')).id
-        book.vendor_id=vendorService.get_vendor_by_name(data.get('vendor_name')).id,
-        book.shelf_id=data.get('shelf_id')
-        book.price=data.get('price')
-        book.availability=data.get('availability')
-        book.date_of_publishing=data.get('date_of_publishing')
-        book.shelf_date=data.get('shelf_date')
-        book.bought_on=data.get('bought_on')
+        book.title = data.get('title')
+        book.preface = data.get('preface')
+        book.publisher_id = publisherService.get_publisher_by_name(
+            data.get('publisher_name')).id
+        book.vendor_id = vendorService.get_vendor_by_name(
+            data.get('vendor_name')).id,
+        book.shelf_id = data.get('shelf_id')
+        book.price = data.get('price')
+        book.availability = data.get('availability')
+        book.date_of_publishing = data.get('date_of_publishing')
+        book.shelf_date = data.get('shelf_date')
+        book.bought_on = data.get('bought_on')
         db.session.commit()
         return book
-    
+
     @staticmethod
     def remove_book(book):
         db.session.delete(book)
         db.session.commit()
         return book
-    
+
     @staticmethod
     def get_book_by_id(book_id):
         book = Books.query.filter_by(id=book_id).first()
         return book.to_dict()
-    
+
+
 class transactionService:
     @staticmethod
-    def add_transaction(data):
+    def add_issue_transaction(data):
         new_transaction = Transactions(
-            type=data.get('type'),
-            employee_id=userService.get_employee_by_name(data.get('employee_name')).id,
-            member_id=userService.get_member_by_name(data.get('member_name')).id,
-            book_id=BookService.get_book_by_title(data.get('title')).id
+            issue_date=data.get('date'),
+            employee_id=userService.get_employee_by_name(
+                data.get('employee_name')).id,
+            member_id=userService.get_member_by_name(
+                data.get('member_name')).id,
+            book_id=BookService.get_book_by_title(data.get('title')).id,
+            return_date=None
         )
         db.session.add(new_transaction)
         db.session.commit()
         return new_transaction
-    
+
+    @staticmethod
+    def add_return_transition(data):
+        employee_id = userService.get_employee_by_name(
+            data.get('employee_name')).id
+        member_id = userService.get_member_by_name(data.get('member_name')).id
+        book_id = BookService.get_book_by_title(data.get('title')).id
+        transaction = Transactions.query.filter_by(
+            member_id=member_id, employee_id=employee_id, book_id=book_id).first()
+        if transaction:
+            transaction.return_date = data.get('date')
+        db.session.commit()
+        return transaction
+
     @staticmethod
     def modify_transaction(transaction, data):
-            transaction.type=data.get('type'),
-            transaction.date=data.get('date'),
-            transaction.employee_id=userService.get_employee_by_name(data.get('employee_name')).id,
-            transaction.member_id=userService.get_member_by_name(data.get('member_name')).id,
-            transaction.title=data.get('title')
-            db.session.commit()
-            return transaction
-    
-    
+        transaction.type = data.get('type'),
+        transaction.date = data.get('date'),
+        transaction.employee_id = userService.get_employee_by_name(
+            data.get('employee_name')).id,
+        transaction.member_id = userService.get_member_by_name(
+            data.get('member_name')).id,
+        transaction.title = data.get('title')
+        db.session.commit()
+        return transaction
+
     @staticmethod
     def get_for_member(member_id):
-        transactions=Transactions.query.filter_by(member_id=member_id).all()
+        transactions = Transactions.query.filter_by(member_id=member_id).all()
         return transactions
-    
+
     @staticmethod
     def get_for_employee(employee_id):
-        transactions=Transactions.query.filter_by(employee_id=employee_id).all()
+        transactions = Transactions.query.filter_by(
+            employee_id=employee_id).all()
         return transactions
-    
+
+    @staticmethod
+    def calculate_fine(transaction):
+        due_date = transaction.issue_date + timedelta(days=30)
+        if transaction.return_date > due_date:
+            overdue_days = (transaction.return_date - due_date).days
+            fine_amount = overdue_days * 5
+            return {
+                'overdue_days': overdue_days,
+                'fine_amount': fine_amount
+            }
+        return None
+
+    @staticmethod
+    def add_fine(transaction_id):
+        transaction = Transactions.query.filter_by(id=transaction_id).first()
+        if not transaction:
+            return {'error': 'Transaction not found'}
+
+        fine_data = transactionService.calculate_fine(transaction)
+        if fine_data:
+            fine = Fines(
+                amount=fine_data['fine_amount'],
+                days_delay=fine_data['overdue_days'],
+                transaction_id=transaction_id
+            )
+            db.session.add(fine)
+            db.session.commit()
+            return fine
+        return {'error': 'no fine applicable'}
+
+    @staticmethod
+    def get_fines_of_transactions(transactions):
+        fines = []
+        for transaction in transactions:
+            fines_for_transaction = Fines.query.filter_by(transaction_id=transaction.id).all()
+            fines.extend(fines_for_transaction)
+        return [fine.to_dict() for fine in fines]

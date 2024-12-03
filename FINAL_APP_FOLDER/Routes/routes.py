@@ -224,9 +224,8 @@ def view_location():
 
 @bp.route('/view_fines', methods=['GET'])
 def view_fines():
-    # if current_user.type == "member":
-    #     list=transactionController.get_for_member(current_user.id)
-    # else:
-    #     list=transactionController.get_for_employee(current_user.id)
-    return render_template('view_fines.html')
-# ,transactions=list)
+    if current_user.type == "member":
+        list=transactionController.get_fines_for_member(current_user.id)
+    else:
+        list=transactionController.get_fines_for_employee(current_user.id)
+    return render_template('view_fines.html', fines = list )

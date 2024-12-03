@@ -17,10 +17,10 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Date</th>
                             <th>Book Title</th>
                             <th>Author</th>
-                            <th>Type</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
                             <th>Issued To</th>
                             <th>Issued By</th>
                         </tr>
@@ -29,10 +29,10 @@
                     <tbody>
                         <tr>
                             <td>{{transaction["id"]}}</td>
-                            <td>{{transaction["date"]}}</td>
                             <td>{{transaction["book"]["title"]}}</td>
                             <td>{{transaction["author_name"]}}</td>
-                            <td>{{transaction["type"]}}</td>
+                            <td>{{transaction["issue_date"]}}</td>
+                            <td>{{transaction["return_date"]}}</td>
                             <td>{{transaction["member"]["name"]}}</td>
                             <td>{{transaction["employee"]["name"]}}</td>
                         </tr>
